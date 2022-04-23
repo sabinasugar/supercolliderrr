@@ -145,6 +145,8 @@ x = Synth(\GUIln, [\freq, ~slider.value.linexp(0, 1, 100, 4000)]);
 // x maximum
 // n minimum
 
+// tabx rcxn
+
 // decorator trick + ProxySpace test
 
 (
@@ -199,7 +201,7 @@ x = Synth(\GUIln, [\freq, w.view.children[1].value.linexp(0, 1, 100, 4000)]);
 ~out = {SinOsc.ar(\freq.kr(300).lag(0.5) + (LFPulse.ar(\freq2.kr(20).lag(0.5)) * \fm.kr(0.1).lag(0.5)))!2 * 0.5};
 
 Window.closeAll;
-w = Window("proxyControl1", Rect(550.0, 306.0, 341.0, 512.0), false, true)
+w = Window("tab +rcxn", Rect(550.0, 306.0, 341.0, 512.0), false, true)
 .front
 .alwaysOnTop_(true);
 w.view.decorator_(FlowLayout(w.bounds, 19@10, 1@1));
@@ -241,10 +243,11 @@ w.view.children[5]
 (
 m = ProxyMixer(p, 8);
 m.parent.alwaysOnTop_(true); // show mixer in front of IDE
+ProxyMeter.addMixer(m); // requires JITLibExtensions quark ]
 )
 
 
-~out2 = { (LFNoise1.ar(3)!2) + (\in.kr(0)*0.5)};
+~out2 = { (LFNoise1.ar(3)!2) + (\in.kr(0)*1)};
 ~out2.map(\in, ~out);
 
 p.playingProxies;
