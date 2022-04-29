@@ -201,7 +201,7 @@ x = Synth(\GUIln, [\freq, w.view.children[1].value.linexp(0, 1, 100, 4000)]);
 ~out = {SinOsc.ar(\freq.kr(300).lag(0.5) + (LFPulse.ar(\freq2.kr(20).lag(0.5)) * \fm.kr(0.1).lag(0.5)))!2 * 0.5};
 
 Window.closeAll;
-w = Window("tab +rcxn", Rect(550.0, 306.0, 341.0, 512.0), false, true)
+w = Window("tab rcxn", Rect(958.0, 314.0, 341.0, 512.0), false, true)
 .front
 .alwaysOnTop_(true);
 w.view.decorator_(FlowLayout(w.bounds, 19@10, 1@1));
@@ -240,21 +240,117 @@ w.view.children[5]
 
 ~out.play;
 
-(
-m = ProxyMixer(p, 8);
-m.parent.alwaysOnTop_(true); // show mixer in front of IDE
-ProxyMeter.addMixer(m); // requires JITLibExtensions quark ]
-)
-
-
 ~out2 = { (LFNoise1.ar(3)!2) + (\in.kr(0)*1)};
 ~out2.map(\in, ~out);
 
 p.playingProxies;
 p.clear;
 
+w.bounds;
+
+(
+n = Window("node tree", Rect(616.0, 292.0, 341.0, 512.0), true, true, s, true)
+.front
+.alwaysOnTop_(true);
+s.plotTreeView(0.5, n);
+)
+
+(
+m = ProxyMixer(p, 8);
+m.parent.alwaysOnTop_(true); // show mixer in front of IDE
+ProxyMeter.addMixer(m); // requires JITLibExtensions quark
+)
 
 
+//// v2
 
+(
+Window.closeAll;
+w = Window("tab rcxn", Rect(706.0, 275.0, 625.0, 165.0), false, true)
+.front
+.alwaysOnTop_(true);
+w.view.decorator_(FlowLayout(w.bounds, 1@12, 10@10));
 
+n.clear;
+n = ();
+n.params = ["param1", "param2", "param3", "param4", "param5", "param6", "param7", "param8", "param9", "param10"]; // parameter names
 
+10.do{ | i |
+	EZSlider(w, 300@20, n.params[i], ControlSpec(0.0, 1.0), nil, 0.0, labelWidth: 45)
+	.font_(Font("Monaco", 10));
+};
+
+w.view.children[1]
+.action_({ | obj |
+	var value;
+	value = obj.value.linlin(0, 1, 30, 200).postln;
+	~proxyName.map(\name, value);
+});
+
+w.view.children[3]
+.action_({ | obj |
+	var value;
+	value = obj.value.linexp(0, 1, 2, 2000).postln;
+	~proxyName.map(\name, value);
+});
+
+w.view.children[5]
+.action_({ | obj |
+	var value;
+	value = obj.value.linexp(0, 1, 0.1, 100).postln;
+	~proxyName.map(\name, value);
+});
+
+w.view.children[7]
+.action_({ | obj |
+	var value;
+	value = obj.value.linexp(0, 1, 0.1, 100).postln;
+	~proxyName.map(\name, value);
+});
+
+w.view.children[9]
+.action_({ | obj |
+	var value;
+	value = obj.value.linexp(0, 1, 0.1, 100).postln;
+	~proxyName.map(\name, value);
+});
+
+w.view.children[11]
+.action_({ | obj |
+	var value;
+	value = obj.value.linexp(0, 1, 0.1, 100).postln;
+	~proxyName.map(\name, value);
+});
+
+w.view.children[13]
+.action_({ | obj |
+	var value;
+	value = obj.value.linexp(0, 1, 0.1, 100).postln;
+	~proxyName.map(\name, value);
+});
+
+w.view.children[14]
+.action_({ | obj |
+	var value;
+	value = obj.value.linexp(0, 1, 0.1, 100).postln;
+	~proxyName.map(\name, value);
+});
+
+w.view.children[15]
+.action_({ | obj |
+	var value;
+	value = obj.value.linexp(0, 1, 0.1, 100).postln;
+	~proxyName.map(\name, value);
+});
+
+w.view.children[17]
+.action_({ | obj |
+	var value;
+	value = obj.value.linexp(0, 1, 0.1, 100).postln;
+	~proxyName.map(\name, value);
+});
+
+m = ProxyMixer(p, 8);
+m.parent.alwaysOnTop_(true);
+ProxyMeter.addMixer(m);
+)

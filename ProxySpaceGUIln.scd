@@ -3,9 +3,8 @@ s.options.numPrivateAudioBusChannels = 1024;
 s.options.memSize = 8192 * 16;
 s.options.numInputBusChannels = 0;
 s.options.numOutputBusChannels = 2;
-s.boot;
 c = TempoClock(1).permanent_(true);
-p = ProxySpace.push(s, \proxyName, c);
+p = ProxySpace.push(s.boot, \proxyName, c);
 p.quant = 4;
 )
 
@@ -119,3 +118,43 @@ s.plotTreeView(0.5, n);
 
 n.close;
 
+//// v2
+
+(
+Window.closeAll;
+w = Window("tab rcxn", Rect(706.0, 275.0, 625.0, 165.0), false, true)
+.front
+.alwaysOnTop_(true);
+w.view.decorator_(FlowLayout(w.bounds, 1@12, 10@10));
+
+n.clear;
+n = ();
+n.params = ["param1", "param2", "param3", "param4", "param5", "param6", "param7", "param8", "param9", "param10"]; // parameter names
+n.actions = [
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~out.map(\freq, value);},
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~proxyName.map(\param, value);},
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~proxyName.map(\param, value);},
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~proxyName.map(\param, value);},
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~proxyName.map(\param, value);},
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~proxyName.map(\param, value);},
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~proxyName.map(\param, value);},
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~proxyName.map(\param, value);},
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~proxyName.map(\param, value);},
+	{ | ez | var value; value = ez.value.linlin(0, 1, 30, 200).postln; ~proxyName.map(\param, value);},
+]; // actions
+
+10.do{ | i |
+	EZSlider(w, 300@20, n.params[i], ControlSpec(0.0, 1.0), n.actions[i].postln, 0.0, labelWidth: 45)
+	.font_(Font("Monaco", 10))
+	.setColors(numBackground: Color.new255(42, 42, 42), numNormalColor: Color.new255(150, 150, 150)); // opt
+};
+
+)
+
+w.view.children[1].children
+
+n.actions[1]
+
+~out = {SinOsc.ar(\freq.kr(44).lag(0.2), mul: 0.5)!2};
+~out.play;
+~out.free;
