@@ -1,15 +1,4 @@
-(
-s.options.numPrivateAudioBusChannels = 1024;
-s.options.memSize = 8192 * 16;
-s.options.numInputBusChannels = 0;
-s.options.numOutputBusChannels = 2;
-c = TempoClock(1).permanent_(true);
-p = ProxySpace.push(s.boot, \proxyName, c);
-p.quant = 4;
-m = ProxyMixer.small(p, 8);
-m.parent.alwaysOnTop_(true);
-ProxyMeter.addMixer(m);
-)
+(Platform.userAppSupportDir +/+ "/boot.scd").load;
 
 (
 c = Bus.control(s, 1);
