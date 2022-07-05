@@ -2,19 +2,24 @@ Bo.ot;
 
 (
 m = MarkovSet([
-	[1, [2, 3], [0.8, 0.2]],
-	[2, [3, 4, 5, 6, 7, 8]]
+	[0.2, [0.1, 0.3], [0.8, 0.2]],
+	[0.1, [0.2]],
+	[0.3, [0.05, 0.4, 0.2]]
 ], false);
 m.makeSeeds;
 x = m.asStream;
 )
 
+(
+Pbind(
+	\instrument, \test,
+	\dur, x.trace
+).play;
+)
+
 x.nextN(100);
 
 
-~pat = Pbind(
-	\instrument, \default
-);
 
 
 z = Pseq([100, 200, 300, Prand([1.2, 1.4, 1.5])],inf).asStream;
