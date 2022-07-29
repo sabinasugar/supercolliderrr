@@ -1,30 +1,97 @@
 Bo.ot;
 
 (
-m = MarkovSet([
-	[0.2, [0.1, 0.3], [0.8, 0.2]],
-	[0.1, [0.2]],
-	[0.3, [0.05, 0.4, 0.2]]
-], false);
-m.makeSeeds;
-x = m.asStream;
+m = ();
+m.set1 = ();
+m.set1.state = ();
+m.set1.state[1] = Pseq([1, \, \, \], 2);
+m.set1.state[2] = Pseq([1, 1, 1, 1], 1);
+m.set1.state[3] = Pseq([1, \, \, 1, \, \, 1, \], 1);
+m.set1.state[4] = Pseq([1, \, \, 1, \, \, 1, \], 1);
+
+m.mset = MarkovSet([
+	[m.set1.state[1], [m.set1.state[1], m.set1.state[2]], nil],
+	[m.set1.state[2], [m.set1.state[1], m.set1.state[3]], [0.2, 0.8]],
+	[m.set1.state[3], [m.set1.state[3], m.set1.state[4], m.set1.state[1]], nil]
+], true);
+m.mset.makeSeeds;
+x = m.mset.asStream;
 )
 
 (
-Pbind(
-	\instrument, \test,
-	\dur, x.trace
-).play;
+b = ();
+b.buf = Buffer.read(s, "/Users/ivainkalashnik/Documents/Storage/Okuch/Black Octopus Sound - Dub Techno Vol. 1/Drums - Kicks/Dt1_D#_Kick_19.wav");
+b.buf2 = Buffer.read(s, "/Users/ivainkalashnik/Documents/Storage/Okuch/Black Octopus Sound - Dub Techno Vol. 1/Drums - Claps/DT1_Clap_08.wav");
+b.buf3 = Buffer.read(s, "/Users/ivainkalashnik/Documents/Storage/Okuch/Synth Drum Machines/Access Virus B/Hat06.wav");
+b.buf4 = Buffer.read(s, "/Users/ivainkalashnik/Documents/Storage/Okuch/Black Octopus Sound - Dub Techno Vol. 1/Bass - Loops/DT1_123_G#m7_Bass_Loop_27.wav");
+b.buf5 = Buffer.read(s, "/Users/ivainkalashnik/Documents/Storage/Okuch/Splice/064bpm_F_Candy_pad.wav");
+
 )
 
+b.buf.play;
+
+(
+~k = Pbind(
+	\instrument, \splayer,
+	\dur, Prand([
+		Pn(0.4, 16),
+		Pn(0.2, 16)], inf),
+	\sndbuf, b.buf,
+	\rate, x,
+	\amp, 0.5
+);
+
+~c = Pbind(
+	\instrument, \splayer,
+	\dur, 0.2,
+	\sndbuf, b.buf2,
+	\rate, x,
+	\amp, 0.5
+);
+
+~h = Pbind(
+	\instrument, \splayer,
+	\dur, 0.4,
+	\legato, 0.02,
+	\rel, 0.22,
+	\sndbuf, b.buf3,
+	\rate, x,
+	\amp, 0.2
+);
+
+~b = Pbind(
+	\instrument, \splayer,
+	\dur, 0.4,
+	\sndbuf, b.buf4,
+	\rel, 0.5,
+	\rate, x,
+	\amp, 0.5
+);
+
+~pad = Pbind(
+	\instrument, \splayer,
+	\dur, Prand([0.2, 0.1], inf),
+	\legato, 2,
+	\sndbuf, b.buf5,
+	\start, Pwhite(0.0, 1.0, inf),
+	\atk, 2,
+	\rel, 3,
+	\curve, -5,
+	\rate, x + 0.0,
+	\amp, 0.7
+);
+
+)
+
+
+~k.play;
+~c.play;
+~h.play;
+~b.play;
+~pad.play;
+~pad.stop;
 x.nextN(100);
 
-
-
-
-z = Pseq([100, 200, 300, Prand([1.2, 1.4, 1.5])],inf).asStream;
-z = Pspy(m, z).asStream;
-z.nextN(50);
 
 (
 b = ();

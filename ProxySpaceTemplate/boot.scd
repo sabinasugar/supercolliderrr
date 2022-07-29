@@ -11,4 +11,4 @@ m.parent.alwaysOnTop_(true);
 ProxyMeter.addMixer(m);
 )
 
-// boot.scd is supposed to be loaded like this: ("/boot.scd").loadRelative; for ProxySpace envir or: (Platform.userHomeDir +/+ "/Desktop/boot.scd").load;
+// boot.scd is supposed to be loaded like this: ("/boot.scd").loadRelative; for ProxySpace envir

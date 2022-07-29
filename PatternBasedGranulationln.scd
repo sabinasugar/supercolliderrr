@@ -14,8 +14,9 @@ SynthDef(\gran_2b, { |out = 0, pos = 0, sndBuf = 0, windowBuf = 1, granDur = 0.1
     OffsetOut.ar(out, Pan2.ar(src, panMax, amp) * window);
 }).add;
 
+// change filter to DFM1 or else
 
-b = Buffer.read(s, "/Users/ivainkalashnik/Documents/Wehlt/1-Audio 0001 [2022-01-12 145226].wav");
+b = Buffer.read(s, "/Users/ivainkalashnik/Desktop/fskomdgfogm.wav");
 // This searches the most likely extension places for the miSCellaneous folder.
 // In case of an extraordinary install situation or a removed sound file, pass the concerned path.
 
